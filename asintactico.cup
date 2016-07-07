@@ -1,0 +1,315 @@
+/* ---------------Seccion de declaraciones preliminares--------------------*/
+package ejemplocup;
+
+/* Import the class java_cup.runtime.*  */
+import java_cup.runtime.*;
+import java.io.FileReader;
+   
+/* Codigo del parser, se copia integramente a la clase final.
+    Agregamos el manejo de errores. */
+parser code {:
+    
+    /* Reporte de error encontrado. */
+    public void report_error(String message, Object info) {
+        StringBuilder m = new StringBuilder("Error");
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+            if (s.left >= 0) {                
+                m.append(" in line "+(s.left+1));
+                if (s.right >= 0)
+                    m.append(", column "+(s.right+1));
+            }
+        }
+        m.append(" : "+message);
+        System.err.println(m);
+    }
+   
+    /* Cuando se encuentra un error de donde el sistema no puede
+        recuperarse, se lanza un error fatal. Se despliega el mensaje
+        de error y se finaliza la ejecucion. */
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+
+    /* Metodo main para garantizar la ejecucion del analizador
+       lexico y sintactico, ademas que se pase como parametro la tabla
+       de simbolos correspondiente. */
+    public static void main(String[] args){
+        try {
+            AnalizadorSintactico asin = new AnalizadorSintactico(
+                    new AnalizadorLexico( new FileReader(args[0])));
+            Object result = asin.parse().value;
+            System.out.println("\n*** Resultados finales ***");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+:};
+   
+
+   
+/* ------------Declaracion de simbolos terminales y no terminales---------- */
+   
+/* Terminales (tokens obtenidos por el analizador lexico).  
+
+   Terminales que no tienen un valor son listados primero, los terminales que
+   tienen un valor como los enteros son listados en la segunda o demas lineas. */
+terminal           SEMI, OP_SUMA, OP_RESTA, OP_MULT, PUNTO, OP_DIV, MAYOR, MENOR, IGL_MAYOR, IGL_MENOR, DIFF, IGUAL, IF, PRT_LFT, PRT_RGT, INT, SUMA, RESTA, MULTIP, DIVIS, COMMA, BRKT_LFT, BRKT_RGT, CLASE;
+terminal Integer     ENTERO;
+
+
+   
+/* No terminales usados en la seccion gramatical. 
+
+   Primero se lista los no terminales que tienen un valor Object y despues
+   se lista los no terminales que tienen un entero. Un Object se refiere a que
+   no tienen tipo, pudiendo ser entero o String. */
+non terminal Object     expr_list, expr_part, comp, estr; 
+non terminal Boolean 	expr;
+non terminal Integer	sum, minus, multi, divi;
+
+   
+
+/* -------------Seccion de predencia y asociacion de los terminales----------- */
+   
+/*
+  Precedencia de los no terminales, no sirve con simbolos terminales.
+  Por eso no la usamos. Además indica si se asocia a izquierda o derecha.
+*/
+  /*precedence left OP_SUMA, OP_RESTA; 
+  precedence left OP_MULT;*/
+
+
+/* ------------------- Seccion de la gramatica ------------------------ */
+   
+/* La gramatica de nuestro analizador.
+   
+   expr_list ::=   expr_list expr_part
+                 | expr_part
+   expr_part ::=   expr SEMI
+   expr      ::=   expr PLUS factor
+                 | expr MINUS factor
+                 | factor
+   factor    ::=   factor TIMES term
+                 | factor DIVIDE term
+                 | term
+   term     ::=    LPAREN expr RPAREN
+                 | NUMBER
+                 | ID     
+*/
+   
+/* 'expr_list' es la raiz de la gramatica. Una 'expr_list' puede ser una 'expr_list'
+   seguida de una expr_part, o puede ser una expr_part.
+   Un terminal o no terminal se define <termino> ::= termino1 termino2 ... terminoN.;
+   donde termino puede ser terminal o no terminal, solo se permite un simbolo a la
+   izquierda. La | sirve para indicar que es una produccion u otra.
+   Debemos pasar de simbolos no terminales a simbolos terminales. Una gramatica que no
+   termina en simbolos terminales se dice que no reduce, y por lo tanto nunca se finaliza
+   su procesado.
+*/
+   
+    expr_list ::= expr_list expr_part
+                  |
+                  expr_part
+                  ;
+
+/* 'expr_part' se compone de una expr seguida de SEMI, o de una asign seguida de SEMI.
+   asign:a esta estableciendo que a representa al objeto asociado a asign, entre {: :}
+   se coloca el sodigo en java para las acciones a tomar al cumplirse una produccion.
+*/
+   
+   expr_part ::= estr:e
+                  {:
+                    System.out.println(" = " + e); 
+                  :} 
+                  SEMI
+                 ;
+				 
+
+                  
+/* 'expr' puede ser una expresion que inicia por numero entero op_suma expr,
+  de esa forma se realiza una suma. Tambien puede ser un numero entero, con esto
+  se devuelve el valor del entero. En RESULT se almacena el valor de las acciones,
+  y se pasa al siguiente nivel de la gramatica.
+*/              
+
+estr			::= CLASE BRKT_LFT comp:e BRKT_RGT
+				{:
+				RESULT = e;
+				:}
+				;
+
+  
+  
+comp			::= IF PRT_LFT expr:e PRT_RGT  
+				{:
+				RESULT = e;
+				:}
+				|
+				SUMA PRT_LFT sum:e PRT_RGT SEMI
+				{:
+				RESULT = e;
+				:}
+				|
+				RESTA PRT_LFT minus:e PRT_RGT SEMI
+				{:
+				RESULT = e;
+				:}
+				|
+				MULTIP PRT_LFT multi:e PRT_RGT SEMI
+				{:
+				RESULT = e;
+				:}
+				|
+				DIVIS PRT_LFT divi:e PRT_RGT SEMI
+				{:
+				RESULT = e;
+				:}
+				|
+				INT SUMA PRT_LFT sum:e PRT_RGT SEMI
+				{:
+				RESULT = e;
+				:}
+				;
+
+  
+  
+  
+
+expr          ::= ENTERO:e MAYOR ENTERO:f
+                {:
+                   if(e > f){
+				    RESULT = true;
+				   }else{
+				   RESULT = false;}
+				   
+                :}
+				|
+				  ENTERO:e MENOR ENTERO:f
+				{:
+					 if(e < f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+				|
+				  ENTERO:e IGL_MAYOR ENTERO:f
+				{:
+					 if(e >= f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+				|
+				  ENTERO:e IGL_MENOR ENTERO:f
+				{:
+					 if(e <= f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+				|
+				  ENTERO:e DIFF ENTERO:f
+				{:
+					 if(e != f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+				|
+				  ENTERO:e IGUAL ENTERO:f
+				{:
+					 if(e == f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+                ;
+				
+sum			::= ENTERO:e COMMA ENTERO:f
+				{:
+					int idk = (e + f);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+				{:
+					int idk = (e + f + g);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+				{:
+					int idk = (e + f + g + h);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				{:
+					int idk = (e + f + g + h + i);
+					RESULT = idk;
+				:}
+				;
+
+minus			::= ENTERO:e COMMA ENTERO:f
+				{:
+					int idk = (e - f);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+				{:
+					int idk = (e - f - g);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+				{:
+					int idk = (e - f - g - h);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				{:
+					int idk = (e - f - g - h - i);
+					RESULT = idk;
+				:}
+				;
+
+multi			::= ENTERO:e COMMA ENTERO:f
+				{:
+					int idk = (e * f);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+				{:
+					int idk = (e * f * g);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+				{:
+					int idk = (e * f * g * h);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				{:
+					int idk = (e * f * g * h * i);
+					RESULT = idk;
+				:}
+				;
+divi			::= ENTERO:e COMMA ENTERO:f
+				{:
+					int idk = (e / f);
+					RESULT = idk;
+				:}
+				;
+

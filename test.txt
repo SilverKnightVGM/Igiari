@@ -1,0 +1,5 @@
+clase {
+
+multiplicacion(4,4);
+
+};
