@@ -137,9 +137,11 @@ Palabra =[a-zA-ZÑñ]+
 							return symbol(sym.BRKT_RGT);}
 	"clase"				{System.out.print(" clase ");
 							return symbol(sym.CLASE);}
-    "imprimir->"		{System.out.print(" imprimir-> ");
+							}
+        "imprimir->"				{System.out.print(" imprimir->" ");
 							return symbol(sym.IMPRIMIR);}
-	}
+							}
+							
 
 
 		  

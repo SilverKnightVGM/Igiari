@@ -66,9 +66,11 @@ terminal String    PALABRA;
    Primero se lista los no terminales que tienen un valor Object y despues
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
-non terminal Object     expr_list, expr_part, estr, expr, comp; 
+non terminal Object     expr_list, expr_part, comp, estr; 
+non terminal Boolean 	expr;
 non terminal Integer	sum, minus, multi, divi;
 
+   
 
 /* -------------Seccion de predencia y asociacion de los terminales----------- */
    
@@ -99,7 +101,10 @@ non terminal Integer	sum, minus, multi, divi;
 */
 
 
-estr			::= CLASE PALABRA BRKT_LFT expr_list BRKT_RGT
+estr			::= CLASE PALABRA BRKT_LFT expr_list:e BRKT_RGT
+				{:
+				RESULT = e;
+				:}
 				;
    
 /* 'expr_list' es la raiz de la gramatica. Una 'expr_list' puede ser una 'expr_list'
@@ -143,7 +148,7 @@ comp			::= IF PRT_LFT expr:e PRT_RGT
 				RESULT = e;
 				:}
 				|
-				SUMA PRT_LFT sum:e PRT_RGT
+				SUMA PRT_LFT sum:e PRT_RGT 
 				{:
 				RESULT = e;
 				:}
@@ -230,7 +235,8 @@ expr          ::= ENTERO:e MAYOR ENTERO:f
 				
 sum			::= ENTERO:e COMMA ENTERO:f
 				{:
-					RESULT = e.intValue() + f.intValue();
+					int idk = (e + f);
+					RESULT = idk;
 				:}
 				|
 				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
@@ -301,7 +307,6 @@ multi			::= ENTERO:e COMMA ENTERO:f
 					RESULT = idk;
 				:}
 				;
-				
 divi			::= ENTERO:e COMMA ENTERO:f
 				{:
 					int idk = (e / f);

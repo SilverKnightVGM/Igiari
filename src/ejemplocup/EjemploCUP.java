@@ -20,6 +20,7 @@ public class EjemploCUP {
     public final static int GENERAR = 1;
     public final static int EJECUTAR = 2;
     public final static int SALIR = 3;
+    public final static int PRUEBA = 4;
 
     /**
      * Es un menu para elegir entre generar el analizador lexico y sintactico, o
@@ -31,11 +32,12 @@ public class EjemploCUP {
         java.util.Scanner in = new Scanner(System.in);
         int valor = 0;
         do {
-            System.out.println("*********** Ariel Rosario 14-0333 ****************");
+            
             System.out.println("Elija una opcion: ");
             System.out.println("1) Generar");
             System.out.println("2) Ejecutar");
             System.out.println("3) Salir");
+            System.out.println("4) Prueba");
             System.out.print("Opcion: ");
             valor = in.nextInt();
             switch (valor) {
@@ -82,6 +84,10 @@ public class EjemploCUP {
                     AnalizadorSintactico.main(archivoPrueba);
                     System.out.println("Ejecutado!");
                     break;
+                }
+                case PRUEBA: {
+                    
+                    System.out.println(8/2/2);
                 }
                 case SALIR: {
                     System.out.println("Adios!");

@@ -1,5 +1,6 @@
-clase {
+clase Prueba {
 
-multiplicacion(4,4);
-
-};
+suma(4,4,5);
+suma(4,4);
+multiplicacion(2,2);
+}
