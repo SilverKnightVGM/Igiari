@@ -3,7 +3,12 @@ clase Prueba {
 if(4==4){
 	suma(4,2);
 	division(6,2);
-	
+	resta();
+	resta(1);
+	multiplicacion();
+	multiplicacion(3);
+	division();
+	division(5);
 	if(2<6){
 	resta(4,2);
 	multiplicacion(5,5);

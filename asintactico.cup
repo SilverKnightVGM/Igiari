@@ -259,7 +259,17 @@ expr          ::= ENTERO:e MAYOR ENTERO:f
 				:}
                 ;
 				
-sum			::= ENTERO:e COMMA ENTERO:f
+sum			::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f
 				{:
 					RESULT = e.intValue() + f.intValue();
 				:}
@@ -283,7 +293,18 @@ sum			::= ENTERO:e COMMA ENTERO:f
 				:}
 				;
 
-minus			::= ENTERO:e COMMA ENTERO:f
+minus			::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+
+				|
+				ENTERO:e COMMA ENTERO:f
 				{:
 					int idk = (e - f);
 					RESULT = idk;
@@ -308,7 +329,19 @@ minus			::= ENTERO:e COMMA ENTERO:f
 				:}
 				;
 
-multi			::= ENTERO:e COMMA ENTERO:f
+multi			::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+
+				|
+				
+				ENTERO:e COMMA ENTERO:f
 				{:
 					int idk = (e * f);
 					RESULT = idk;
@@ -333,7 +366,18 @@ multi			::= ENTERO:e COMMA ENTERO:f
 				:}
 				;
 				
-divi			::= ENTERO:e COMMA ENTERO:f
+divi			::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+
+				|
+				ENTERO:e COMMA ENTERO:f
 				{:
 					int idk = (e / f);
 					RESULT = idk;
