@@ -1,6 +1,14 @@
 clase Prueba {
 
-suma(4,4,5);
-suma(4,4);
-multiplicacion(2,2);
+if(4==4){
+	suma(4,2);
+	division(6,2);
+	
+	if(2<6){
+	resta(4,2);
+	multiplicacion(5,5);
+	}
+	imprimir-> suma(9,9);
+	suma(1,1);
+	}
 }

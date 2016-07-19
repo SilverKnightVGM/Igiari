@@ -66,7 +66,7 @@ terminal String    PALABRA;
    Primero se lista los no terminales que tienen un valor Object y despues
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
-non terminal Object     expr_list, expr_part, estr, expr, comp; 
+non terminal Object     expr_list, expr_part, estr, expr, COMPARACION, comp; 
 non terminal Integer	sum, minus, multi, divi;
 
 
@@ -135,15 +135,26 @@ expr_part               ::= comp:e
                                 System.out.println(" = " + e); 
                             :} 
                             SEMI
+							|
+							COMPARACION:e
+                            {:
+                               
+                            :}
                             ;
+							
+COMPARACION             ::= IF PRT_LFT expr:e PRT_RGT BRKT_LFT expr_list:f BRKT_RGT
+                            {:
+                                if ((boolean) e==true){
+								RESULT = f;
+								}else{
+								RESULT = e;
+								}
+                            :}
+							;
+  
 
   
-comp			::= IF PRT_LFT expr:e PRT_RGT  
-				{:
-				RESULT = e;
-				:}
-				|
-				SUMA PRT_LFT sum:e PRT_RGT
+comp			::= SUMA PRT_LFT sum:e PRT_RGT
 				{:
 				RESULT = e;
 				:}
@@ -164,6 +175,26 @@ comp			::= IF PRT_LFT expr:e PRT_RGT
 				:}
 				|
 				INT SUMA PRT_LFT sum:e PRT_RGT
+				{:
+				RESULT = e;
+				:}
+				|
+				IMPRIMIR SUMA PRT_LFT sum:e PRT_RGT 
+				{:
+				RESULT = e;
+				:}
+				|
+				IMPRIMIR RESTA PRT_LFT minus:e PRT_RGT
+				{:
+				RESULT = e;
+				:}
+				|
+				IMPRIMIR MULTIP PRT_LFT multi:e PRT_RGT
+				{:
+				RESULT = e;
+				:}
+				|
+				IMPRIMIR DIVIS PRT_LFT divi:e PRT_RGT
 				{:
 				RESULT = e;
 				:}
