@@ -86,21 +86,7 @@ Palabra =[a-zA-ZÑñ]+
    
     /* Regresa que el token SEMI declarado en la clase sym fue encontrado. */
     ";"                { return symbol(sym.SEMI); }
-    /* Regresa que el token OP_SUMA declarado en la clase sym fue encontrado. */
-    "+"                {  System.out.print("+");
-                          return symbol(sym.OP_SUMA); }
-    /* Regresa que el token OP_SUMA declarado en la clase sym fue encontrado. */
-    "-"                {  System.out.print("-");
-                          return symbol(sym.OP_RESTA); }
-    /* Regresa que el token OP_SUMA declarado en la clase sym fue encontrado. */
-    "*"                {  System.out.print("*");
-                          return symbol(sym.OP_MULT); }
-                          /* Regresa que el token Division declarado en la clase sym fue encontrado. */
-    "/"                {  System.out.print("/");
-                          return symbol(sym.OP_DIV); }
                           /* Regresa que el token PUNTO declarado en la clase sym fue encontrado. */
-    "."                {  System.out.print(".");
-                          return symbol(sym.PUNTO); }
     ">"                {  System.out.print(">");
                           return symbol(sym.MAYOR); }
     "<"                {  System.out.print("<");
@@ -129,6 +115,8 @@ Palabra =[a-zA-ZÑñ]+
 							return symbol(sym.MULTIP);}
 	"division"			{System.out.print("division" );
 							return symbol(sym.DIVIS);}
+	"potencia"			{System.out.print("potencia" );
+							return symbol(sym.POTENCIA);}
 	","					{System.out.print(",");
 							return symbol(sym.COMMA);}
 	"{"					{System.out.print("{");

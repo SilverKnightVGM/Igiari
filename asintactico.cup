@@ -4,6 +4,7 @@ package ejemplocup;
 /* Import the class java_cup.runtime.*  */
 import java_cup.runtime.*;
 import java.io.FileReader;
+import java.math.BigDecimal;
    
 /* Codigo del parser, se copia integramente a la clase final.
     Agregamos el manejo de errores. */
@@ -55,7 +56,7 @@ parser code {:
 
    Terminales que no tienen un valor son listados primero, los terminales que
    tienen un valor como los enteros son listados en la segunda o demas lineas. */
-terminal           SEMI, OP_SUMA, OP_RESTA, OP_MULT, PUNTO, OP_DIV, MAYOR, MENOR, IGL_MAYOR, IGL_MENOR, DIFF, IGUAL, IF, PRT_LFT, PRT_RGT, INT, SUMA, RESTA, MULTIP, DIVIS, COMMA, BRKT_LFT, BRKT_RGT, CLASE,IMPRIMIR;
+terminal           SEMI, MAYOR, MENOR, IGL_MAYOR, IGL_MENOR, DIFF, IGUAL, IF, PRT_LFT, PRT_RGT, INT, SUMA, RESTA, MULTIP, DIVIS, POTENCIA, COMMA, BRKT_LFT, BRKT_RGT, CLASE,IMPRIMIR;
 terminal Integer     ENTERO;
 terminal String    PALABRA;
 
@@ -66,7 +67,7 @@ terminal String    PALABRA;
    Primero se lista los no terminales que tienen un valor Object y despues
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
-non terminal Object     expr_list, expr_part, estr, expr, COMPARACION, comp; 
+non terminal Object     expr_list, expr_part, estr, expr, COMPARACION, comp, potter; 
 non terminal Integer	sum, minus, multi, divi;
 
 
@@ -138,10 +139,17 @@ expr_part               ::= comp:e
 							|
 							COMPARACION:e
                             {:
-                               
+                               System.out.println(" = " + e);
                             :}
+							|
+							IMPRIMIR comp:e
+							{:
+								System.out.println(" = " + e);
+							:}
+							SEMI
                             ;
 							
+	
 COMPARACION             ::= IF PRT_LFT expr:e PRT_RGT BRKT_LFT expr_list:f BRKT_RGT
                             {:
                                 if ((boolean) e==true){
@@ -179,22 +187,7 @@ comp			::= SUMA PRT_LFT sum:e PRT_RGT
 				RESULT = e;
 				:}
 				|
-				IMPRIMIR SUMA PRT_LFT sum:e PRT_RGT 
-				{:
-				RESULT = e;
-				:}
-				|
-				IMPRIMIR RESTA PRT_LFT minus:e PRT_RGT
-				{:
-				RESULT = e;
-				:}
-				|
-				IMPRIMIR MULTIP PRT_LFT multi:e PRT_RGT
-				{:
-				RESULT = e;
-				:}
-				|
-				IMPRIMIR DIVIS PRT_LFT divi:e PRT_RGT
+				POTENCIA PRT_LFT potter:e PRT_RGT
 				{:
 				RESULT = e;
 				:}
@@ -302,7 +295,6 @@ minus			::=
 				{:
 				RESULT = e;
 				:}
-
 				|
 				ENTERO:e COMMA ENTERO:f
 				{:
@@ -338,9 +330,7 @@ multi			::=
 				{:
 				RESULT = e;
 				:}
-
-				|
-				
+				|				
 				ENTERO:e COMMA ENTERO:f
 				{:
 					int idk = (e * f);
@@ -375,7 +365,6 @@ divi			::=
 				{:
 				RESULT = e;
 				:}
-
 				|
 				ENTERO:e COMMA ENTERO:f
 				{:
@@ -399,6 +388,66 @@ divi			::=
 				{:
 					int idk = (e / f / g / h / i);
 					RESULT = idk;
+				:}
+				;
+
+potter		::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f
+				{:
+					BigDecimal bg1, bg2;
+					bg1 = new BigDecimal(e);
+				
+					bg2 = bg1.pow(f);
+
+					RESULT = bg2;
+				:}
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+				{:
+					BigDecimal bg1, bg2;
+					bg1 = new BigDecimal(e);
+				
+					bg2 = bg1.pow(f);
+					bg1 = bg2.pow(g);
+
+					RESULT = bg1;
+				:}
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+				{:
+				
+					BigDecimal bg1, bg2;
+					bg1 = new BigDecimal(e);
+				
+					bg2 = bg1.pow(f);
+					bg1 = bg2.pow(g);
+					bg2 = bg1.pow(h);
+
+					RESULT = bg2;
+					
+				:}
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				{:
+					
+					BigDecimal bg1, bg2;
+					bg1 = new BigDecimal(e);
+				
+					bg2 = bg1.pow(f);
+					bg1 = bg2.pow(g);
+					bg2 = bg1.pow(h);
+					bg1 = bg2.pow(i);
+
+					RESULT = bg1;
 				:}
 				;
 
