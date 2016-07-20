@@ -1,12 +1,11 @@
 clase Prueba {
 
+imprimir->suma(4,6);
 
-potencia();
-potencia(4);
-potencia(2,3);
-potencia(4,6,2);
-potencia(9,9,9,9);
-potencia(9,9,9,9,9);
+main prueba{
 
+   imprimir->suma(4,6);
+   
+}
 
 }

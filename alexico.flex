@@ -127,6 +127,8 @@ Palabra =[a-zA-ZÑñ]+
 							return symbol(sym.CLASE);}
     "imprimir->"		{System.out.print(" imprimir-> ");
 							return symbol(sym.IMPRIMIR);}
+	"main"				{System.out.print("main" );
+							return symbol(sym.MAIN);}
 	}
 
 

@@ -56,7 +56,7 @@ parser code {:
 
    Terminales que no tienen un valor son listados primero, los terminales que
    tienen un valor como los enteros son listados en la segunda o demas lineas. */
-terminal           SEMI, MAYOR, MENOR, IGL_MAYOR, IGL_MENOR, DIFF, IGUAL, IF, PRT_LFT, PRT_RGT, INT, SUMA, RESTA, MULTIP, DIVIS, POTENCIA, COMMA, BRKT_LFT, BRKT_RGT, CLASE,IMPRIMIR;
+terminal           SEMI, MAYOR, MENOR, IGL_MAYOR, IGL_MENOR, DIFF, IGUAL, IF, PRT_LFT, PRT_RGT, INT, SUMA, RESTA, MULTIP, DIVIS, POTENCIA, COMMA, BRKT_LFT, BRKT_RGT, CLASE,IMPRIMIR, MAIN;
 terminal Integer     ENTERO;
 terminal String    PALABRA;
 
@@ -67,7 +67,7 @@ terminal String    PALABRA;
    Primero se lista los no terminales que tienen un valor Object y despues
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
-non terminal Object     expr_list, expr_part, estr, expr, COMPARACION, comp, potter; 
+non terminal Object     expr_list, expr_part, estr, expr, COMPARACION, comp, potter, CONSTRUCTOR; 
 non terminal Integer	sum, minus, multi, divi;
 
 
@@ -147,6 +147,11 @@ expr_part               ::= comp:e
 								System.out.println(" = " + e);
 							:}
 							SEMI
+							|
+							CONSTRUCTOR:e
+							{:
+								System.out.println(" = " + e);
+							:}
                             ;
 							
 	
@@ -157,6 +162,12 @@ COMPARACION             ::= IF PRT_LFT expr:e PRT_RGT BRKT_LFT expr_list:f BRKT_
 								}else{
 								RESULT = e;
 								}
+                            :}
+							;
+							
+CONSTRUCTOR             ::= MAIN PALABRA BRKT_LFT expr_list:f BRKT_RGT
+                            {:
+                                RESULT = f;
                             :}
 							;
   

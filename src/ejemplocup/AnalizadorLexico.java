@@ -58,12 +58,13 @@ class AnalizadorLexico implements java_cup.runtime.Scanner {
   private static final String ZZ_ACTION_PACKED_0 =
     "\1\0\1\1\2\2\1\3\1\1\1\4\1\5\1\6"+
     "\1\7\2\1\1\10\1\11\7\4\1\12\1\13\1\14"+
-    "\1\0\1\3\1\15\1\16\1\17\1\20\1\21\10\4"+
-    "\1\22\10\4\1\23\7\4\1\24\1\4\1\25\13\4"+
-    "\1\26\1\27\1\0\1\4\1\30\4\4\1\31";
+    "\1\0\1\3\1\15\1\16\1\17\1\20\1\21\11\4"+
+    "\1\22\11\4\1\23\1\4\1\24\6\4\1\25\1\4"+
+    "\1\26\13\4\1\27\1\30\1\0\1\4\1\31\4\4"+
+    "\1\32";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[80];
+    int [] result = new int[83];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -92,15 +93,16 @@ class AnalizadorLexico implements java_cup.runtime.Scanner {
     "\0\314\0\356\0\u0110\0\u0132\0\42\0\42\0\u0154\0\u0176"+
     "\0\u0198\0\u01ba\0\u01dc\0\u01fe\0\u0220\0\42\0\42\0\42"+
     "\0\210\0\210\0\42\0\42\0\42\0\42\0\252\0\u0242"+
-    "\0\u0264\0\u0286\0\u02a8\0\u02ca\0\u02ec\0\u030e\0\u0330\0\252"+
-    "\0\u0352\0\u0374\0\u0396\0\u03b8\0\u03da\0\u03fc\0\u041e\0\u0440"+
-    "\0\252\0\u0462\0\u0484\0\u04a6\0\u04c8\0\u04ea\0\u050c\0\u052e"+
-    "\0\252\0\u0550\0\252\0\u0572\0\u0594\0\u05b6\0\u05d8\0\u05fa"+
-    "\0\u061c\0\u063e\0\u0660\0\u0682\0\u06a4\0\u06c6\0\252\0\252"+
-    "\0\u06e8\0\u070a\0\42\0\u072c\0\u074e\0\u0770\0\u0792\0\252";
+    "\0\u0264\0\u0286\0\u02a8\0\u02ca\0\u02ec\0\u030e\0\u0330\0\u0352"+
+    "\0\252\0\u0374\0\u0396\0\u03b8\0\u03da\0\u03fc\0\u041e\0\u0440"+
+    "\0\u0462\0\u0484\0\252\0\u04a6\0\252\0\u04c8\0\u04ea\0\u050c"+
+    "\0\u052e\0\u0550\0\u0572\0\252\0\u0594\0\252\0\u05b6\0\u05d8"+
+    "\0\u05fa\0\u061c\0\u063e\0\u0660\0\u0682\0\u06a4\0\u06c6\0\u06e8"+
+    "\0\u070a\0\252\0\252\0\u072c\0\u074e\0\42\0\u0770\0\u0792"+
+    "\0\u07b4\0\u07d6\0\252";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[80];
+    int [] result = new int[83];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -131,42 +133,44 @@ class AnalizadorLexico implements java_cup.runtime.Scanner {
     "\20\7\16\0\1\33\41\0\1\34\41\0\1\35\41\0"+
     "\1\36\35\0\1\7\7\0\1\7\1\37\1\40\3\7"+
     "\1\41\11\7\12\0\1\7\7\0\5\7\1\42\12\7"+
-    "\12\0\1\7\7\0\5\7\1\43\12\7\12\0\1\7"+
-    "\7\0\11\7\1\44\6\7\12\0\1\7\7\0\15\7"+
-    "\1\45\2\7\12\0\1\7\7\0\12\7\1\46\5\7"+
-    "\12\0\1\7\7\0\1\47\17\7\12\0\1\7\7\0"+
-    "\3\7\1\50\14\7\12\0\1\7\7\0\13\7\1\51"+
-    "\4\7\12\0\1\7\7\0\6\7\1\52\11\7\12\0"+
-    "\1\7\7\0\12\7\1\53\5\7\12\0\1\7\7\0"+
-    "\4\7\1\54\13\7\12\0\1\7\7\0\3\7\1\55"+
-    "\14\7\12\0\1\7\7\0\7\7\1\56\10\7\12\0"+
-    "\1\7\7\0\17\7\1\57\12\0\1\7\7\0\10\7"+
-    "\1\60\7\7\12\0\1\7\7\0\7\7\1\61\10\7"+
-    "\12\0\1\7\7\0\3\7\1\62\14\7\12\0\1\7"+
-    "\7\0\3\7\1\63\14\7\12\0\1\7\7\0\11\7"+
-    "\1\64\6\7\12\0\1\7\7\0\4\7\1\65\13\7"+
-    "\12\0\1\7\7\0\1\66\17\7\12\0\1\7\7\0"+
-    "\1\67\17\7\12\0\1\7\7\0\1\70\17\7\12\0"+
-    "\1\7\7\0\7\7\1\71\10\7\12\0\1\7\7\0"+
-    "\2\7\1\72\15\7\12\0\1\7\7\0\11\7\1\73"+
-    "\6\7\12\0\1\7\7\0\4\7\1\74\13\7\12\0"+
-    "\1\7\7\0\6\7\1\75\11\7\12\0\1\7\7\0"+
-    "\13\7\1\76\4\7\12\0\1\7\7\0\14\7\1\77"+
-    "\3\7\12\0\1\7\7\0\1\100\17\7\12\0\1\7"+
-    "\7\0\1\101\17\7\12\0\1\7\7\0\12\7\1\102"+
-    "\5\7\12\0\1\7\7\0\1\103\17\7\12\0\1\7"+
-    "\7\0\15\7\1\104\2\7\12\0\1\7\7\0\10\7"+
-    "\1\105\7\7\12\0\1\7\7\0\1\106\17\7\12\0"+
-    "\1\7\7\0\7\7\1\107\10\7\12\0\1\7\7\0"+
-    "\2\7\1\110\15\7\12\0\1\7\7\0\20\7\3\0"+
-    "\1\111\6\0\1\7\7\0\14\7\1\112\3\7\14\0"+
-    "\1\113\37\0\1\7\7\0\7\7\1\114\10\7\12\0"+
-    "\1\7\7\0\14\7\1\115\3\7\12\0\1\7\7\0"+
-    "\1\116\17\7\12\0\1\7\7\0\15\7\1\117\2\7"+
-    "\12\0\1\7\7\0\2\7\1\120\15\7\4\0";
+    "\12\0\1\7\7\0\5\7\1\43\1\7\1\44\10\7"+
+    "\12\0\1\7\7\0\11\7\1\45\6\7\12\0\1\7"+
+    "\7\0\15\7\1\46\2\7\12\0\1\7\7\0\12\7"+
+    "\1\47\5\7\12\0\1\7\7\0\1\50\17\7\12\0"+
+    "\1\7\7\0\3\7\1\51\14\7\12\0\1\7\7\0"+
+    "\13\7\1\52\4\7\12\0\1\7\7\0\6\7\1\53"+
+    "\11\7\12\0\1\7\7\0\12\7\1\54\5\7\12\0"+
+    "\1\7\7\0\1\55\17\7\12\0\1\7\7\0\4\7"+
+    "\1\56\13\7\12\0\1\7\7\0\3\7\1\57\14\7"+
+    "\12\0\1\7\7\0\7\7\1\60\10\7\12\0\1\7"+
+    "\7\0\17\7\1\61\12\0\1\7\7\0\10\7\1\62"+
+    "\7\7\12\0\1\7\7\0\7\7\1\63\10\7\12\0"+
+    "\1\7\7\0\3\7\1\64\14\7\12\0\1\7\7\0"+
+    "\2\7\1\65\15\7\12\0\1\7\7\0\3\7\1\66"+
+    "\14\7\12\0\1\7\7\0\11\7\1\67\6\7\12\0"+
+    "\1\7\7\0\4\7\1\70\13\7\12\0\1\7\7\0"+
+    "\1\71\17\7\12\0\1\7\7\0\1\72\17\7\12\0"+
+    "\1\7\7\0\1\73\17\7\12\0\1\7\7\0\7\7"+
+    "\1\74\10\7\12\0\1\7\7\0\2\7\1\75\15\7"+
+    "\12\0\1\7\7\0\11\7\1\76\6\7\12\0\1\7"+
+    "\7\0\4\7\1\77\13\7\12\0\1\7\7\0\6\7"+
+    "\1\100\11\7\12\0\1\7\7\0\13\7\1\101\4\7"+
+    "\12\0\1\7\7\0\14\7\1\102\3\7\12\0\1\7"+
+    "\7\0\1\103\17\7\12\0\1\7\7\0\1\104\17\7"+
+    "\12\0\1\7\7\0\12\7\1\105\5\7\12\0\1\7"+
+    "\7\0\1\106\17\7\12\0\1\7\7\0\15\7\1\107"+
+    "\2\7\12\0\1\7\7\0\10\7\1\110\7\7\12\0"+
+    "\1\7\7\0\1\111\17\7\12\0\1\7\7\0\7\7"+
+    "\1\112\10\7\12\0\1\7\7\0\2\7\1\113\15\7"+
+    "\12\0\1\7\7\0\20\7\3\0\1\114\6\0\1\7"+
+    "\7\0\14\7\1\115\3\7\14\0\1\116\37\0\1\7"+
+    "\7\0\7\7\1\117\10\7\12\0\1\7\7\0\14\7"+
+    "\1\120\3\7\12\0\1\7\7\0\1\121\17\7\12\0"+
+    "\1\7\7\0\15\7\1\122\2\7\12\0\1\7\7\0"+
+    "\2\7\1\123\15\7\4\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[1972];
+    int [] result = new int[2040];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -205,11 +209,11 @@ class AnalizadorLexico implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\11\1\1\1\11\3\1\1\11\4\1\2\11"+
-    "\7\1\3\11\1\0\1\1\4\11\52\1\1\0\1\1"+
+    "\7\1\3\11\1\0\1\1\4\11\55\1\1\0\1\1"+
     "\1\11\5\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[80];
+    int [] result = new int[83];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -684,125 +688,130 @@ class AnalizadorLexico implements java_cup.runtime.Scanner {
           case 1: 
             { throw new Error("Caracter ilegal <"+yytext()+">");
             }
-          case 26: break;
+          case 27: break;
           case 2: 
             { /* ignora el espacio */
             }
-          case 27: break;
+          case 28: break;
           case 3: 
             { System.out.print(yytext()); 
                       return symbol(sym.ENTERO, new Integer(yytext()));
             }
-          case 28: break;
+          case 29: break;
           case 4: 
             { System.out.print(yytext()); 
                       return symbol(sym.PALABRA, new String(yytext()));
             }
-          case 29: break;
+          case 30: break;
           case 5: 
             { return symbol(sym.SEMI);
             }
-          case 30: break;
+          case 31: break;
           case 6: 
             { System.out.print(">");
                           return symbol(sym.MAYOR);
             }
-          case 31: break;
+          case 32: break;
           case 7: 
             { System.out.print("<");
                           return symbol(sym.MENOR);
             }
-          case 32: break;
+          case 33: break;
           case 8: 
             { System.out.print("(" );
 							return symbol(sym.PRT_LFT);
             }
-          case 33: break;
+          case 34: break;
           case 9: 
             { System.out.print(")" );
 							return symbol(sym.PRT_RGT);
             }
-          case 34: break;
+          case 35: break;
           case 10: 
             { System.out.print(",");
 							return symbol(sym.COMMA);
             }
-          case 35: break;
+          case 36: break;
           case 11: 
             { System.out.print("{");
 							return symbol(sym.BRKT_LFT);
             }
-          case 36: break;
+          case 37: break;
           case 12: 
             { System.out.print("}");
 							return symbol(sym.BRKT_RGT);
             }
-          case 37: break;
+          case 38: break;
           case 13: 
             { System.out.print(">=");
                           return symbol(sym.IGL_MAYOR);
             }
-          case 38: break;
+          case 39: break;
           case 14: 
             { System.out.print("<=");
                           return symbol(sym.IGL_MENOR);
             }
-          case 39: break;
+          case 40: break;
           case 15: 
             { System.out.print("==");
                           return symbol(sym.IGUAL);
             }
-          case 40: break;
+          case 41: break;
           case 16: 
             { System.out.print("!=");
                           return symbol(sym.DIFF);
             }
-          case 41: break;
+          case 42: break;
           case 17: 
             { System.out.print("if" );
 							return symbol(sym.IF);
             }
-          case 42: break;
+          case 43: break;
           case 18: 
             { System.out.print("int " );
 							return symbol(sym.INT);
             }
-          case 43: break;
+          case 44: break;
           case 19: 
             { System.out.print("suma" );
 							return symbol(sym.SUMA);
             }
-          case 44: break;
+          case 45: break;
           case 20: 
+            { System.out.print("main" );
+							return symbol(sym.MAIN);
+            }
+          case 46: break;
+          case 21: 
             { System.out.print("resta" );
 							return symbol(sym.RESTA);
             }
-          case 45: break;
-          case 21: 
+          case 47: break;
+          case 22: 
             { System.out.print(" clase ");
 							return symbol(sym.CLASE);
             }
-          case 46: break;
-          case 22: 
+          case 48: break;
+          case 23: 
             { System.out.print("potencia" );
 							return symbol(sym.POTENCIA);
             }
-          case 47: break;
-          case 23: 
+          case 49: break;
+          case 24: 
             { System.out.print("division" );
 							return symbol(sym.DIVIS);
             }
-          case 48: break;
-          case 24: 
+          case 50: break;
+          case 25: 
             { System.out.print(" imprimir-> ");
 							return symbol(sym.IMPRIMIR);
             }
-          case 49: break;
-          case 25: 
+          case 51: break;
+          case 26: 
             { System.out.print("multiplicacion" );
 							return symbol(sym.MULTIP);
             }
-          case 50: break;
+          case 52: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
