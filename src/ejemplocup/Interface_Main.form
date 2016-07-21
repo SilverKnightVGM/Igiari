@@ -501,6 +501,9 @@
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="final UndoManager undo = new UndoManager();&#xa;   Document doc = jTextArea1.getDocument();&#xa;    &#xa;   // Listen for undo and redo events&#xa;   doc.addUndoableEditListener(new UndoableEditListener() {&#xa;       public void undoableEditHappened(UndoableEditEvent evt) {&#xa;           undo.addEdit(evt.getEdit());&#xa;       }&#xa;   });&#xa;    &#xa;   // Create an undo action and add it to the text component&#xa;   jTextArea1.getActionMap().put(&quot;Undo&quot;,&#xa;       new AbstractAction(&quot;Undo&quot;) {&#xa;           public void actionPerformed(ActionEvent evt) {&#xa;               try {&#xa;                   if (undo.canUndo()) {&#xa;                       undo.undo();&#xa;                   }&#xa;               } catch (CannotUndoException e) {&#xa;               }&#xa;           }&#xa;      });&#xa;    &#xa;   // Bind the undo action to ctl-Z&#xa;   jTextArea1.getInputMap().put(KeyStroke.getKeyStroke(&quot;control Z&quot;), &quot;Undo&quot;);&#xa;    &#xa;   // Create a redo action and add it to the text component&#xa;   jTextArea1.getActionMap().put(&quot;Redo&quot;,&#xa;       new AbstractAction(&quot;Redo&quot;) {&#xa;           public void actionPerformed(ActionEvent evt) {&#xa;               try {&#xa;                   if (undo.canRedo()) {&#xa;                       undo.redo();&#xa;                   }&#xa;               } catch (CannotRedoException e) {&#xa;               }&#xa;           }&#xa;       });&#xa;    &#xa;   // Bind the redo action to ctl-Y&#xa;   jTextArea1.getInputMap().put(KeyStroke.getKeyStroke(&quot;control Y&quot;), &quot;Redo&quot;);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -518,6 +521,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Save"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

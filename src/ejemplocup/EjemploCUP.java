@@ -12,6 +12,8 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+        
+
 /**
  * @author wpolanco
  */
@@ -31,6 +33,7 @@ public class EjemploCUP {
      */
     public static void main(String[] args) {
         java.util.Scanner in = new Scanner(System.in);
+        
         int valor = 0;
         do {
             

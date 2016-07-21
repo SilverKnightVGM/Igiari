@@ -5,10 +5,26 @@
  */
 package ejemplocup;
 
+import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.Document;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 
 /**
  *
@@ -19,14 +35,20 @@ public class Interface_Main extends javax.swing.JFrame {
     /**
      * Creates new form Interface_Main
      */
+   public static Mapa test = new Mapa();
+   String path;
+   
+ 
     
-    public String resultado = "";
+    public String resultado = "Hola";
     
     
     public Interface_Main() {
         initComponents();
     }
-
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,83 +118,151 @@ public class Interface_Main extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane3.setViewportView(jTextArea1);
+        final UndoManager undo = new UndoManager();
+        Document doc = jTextArea1.getDocument();
 
-        jTabbedPane2.addTab("[File]", jScrollPane3);
-
-        jButton2.setText("Open");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        // Listen for undo and redo events
+        doc.addUndoableEditListener(new UndoableEditListener() {
+            public void undoableEditHappened(UndoableEditEvent evt) {
+                undo.addEdit(evt.getEdit());
             }
         });
 
-        jButton3.setText("Save");
+        // Create an undo action and add it to the text component
+        jTextArea1.getActionMap().put("Undo",
+            new AbstractAction("Undo") {
+                public void actionPerformed(ActionEvent evt) {
+                    try {
+                        if (undo.canUndo()) {
+                            undo.undo();
+                        }
+                    } catch (CannotUndoException e) {
+                    }
+                }
+            });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane2)
+            // Bind the undo action to ctl-Z
+            jTextArea1.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
+
+            // Create a redo action and add it to the text component
+            jTextArea1.getActionMap().put("Redo",
+                new AbstractAction("Redo") {
+                    public void actionPerformed(ActionEvent evt) {
+                        try {
+                            if (undo.canRedo()) {
+                                undo.redo();
+                            }
+                        } catch (CannotRedoException e) {
+                        }
+                    }
+                });
+
+                // Bind the redo action to ctl-Y
+                jTextArea1.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
+
+                jTabbedPane2.addTab("[File]", jScrollPane3);
+
+                jButton2.setText("Open");
+                jButton2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton2ActionPerformed(evt);
+                    }
+                });
+
+                jButton3.setText("Save");
+                jButton3.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton3ActionPerformed(evt);
+                    }
+                });
+
+                javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+                jPanel2.setLayout(jPanel2Layout);
+                jPanel2Layout.setHorizontalGroup(
+                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(5, 5, 5)
-                        .addComponent(jButton3)
-                        .addContainerGap())))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(6, 6, 6)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
-        );
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTabbedPane2)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButton2)
+                                .addGap(5, 5, 5)
+                                .addComponent(jButton3)
+                                .addContainerGap())))
+                );
+                jPanel2Layout.setVerticalGroup(
+                    jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2)
+                            .addComponent(jButton3))
+                        .addGap(6, 6, 6)
+                        .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
+                );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(10, 10, 10)))
+                        .addContainerGap())
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(10, 10, 10)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                        .addContainerGap())
+                );
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+                pack();
+            }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        JFileChooser file = new JFileChooser();
-          file.setCurrentDirectory(new File(System.getProperty("user.home")+"/Desktop"));
           //filter the files
-          FileNameExtensionFilter filter = new FileNameExtensionFilter("*.code", "txt","igiari","java");
-          file.addChoosableFileFilter(filter);
-          int result = file.showSaveDialog(null);
+          FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt","igiari","java");
+          JFileChooser file = new JFileChooser();
+          file.setFileFilter(filter);
+          
+          int result;
+          
+          try{
+              file.setCurrentDirectory(new File(path));
+              file.addChoosableFileFilter(filter);
+              result = file.showSaveDialog(null);
+              System.out.println("PATHHHHH" + path);
+          }catch(Exception e){
+              file.setCurrentDirectory(new File(System.getProperty("user.home")+"/Desktop"));
+              file.addChoosableFileFilter(filter);
+              result = file.showSaveDialog(null);
+          }
+          
+          
+          //FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
+          
            //if the user click on save in Jfilechooser
           if(result == JFileChooser.APPROVE_OPTION){
               File selectedFile = file.getSelectedFile();
-              String path = selectedFile.getAbsolutePath();
+              path = selectedFile.getAbsolutePath();
               jTabbedPane2.setTitleAt(0, path);
+            try {
+                String content = new Scanner(new File(path)).useDelimiter("\\Z").next();
+                jTextArea1.setText(content);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Interface_Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
           }
+          
            //if the user click on save in Jfilechooser
 
 
@@ -182,14 +272,33 @@ public class Interface_Main extends javax.swing.JFrame {
         
           
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    public void setTextArea(String text){
+    jTextArea2.append(text);
+    }
+    
+    
+    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        jTextArea2.setText(resultado);
+        jTextArea2.setText("");
+        String[] archivoPrueba = {jTextArea1.getText()};
+                    AnalizadorSintactico.main(archivoPrueba);
+         
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        try (BufferedWriter fileOut = new BufferedWriter(new FileWriter(path))) {
+        jTextArea1.write(fileOut);
+}      catch (IOException ex) {
+           Logger.getLogger(Interface_Main.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

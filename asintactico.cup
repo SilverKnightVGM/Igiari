@@ -3,9 +3,9 @@ package ejemplocup;
 
 /* Import the class java_cup.runtime.*  */
 import java_cup.runtime.*;
-import java.io.FileReader;
+import java.io.*;
 import java.math.BigDecimal;
-import Interface_Main;
+import java.util.*;
    
 /* Codigo del parser, se copia integramente a la clase final.
     Agregamos el manejo de errores. */
@@ -24,6 +24,7 @@ parser code {:
         }
         m.append(" : "+message);
         System.err.println(m);
+		Interface_Main.jTextArea2.append(m.toString() + "\n");
     }
    
     /* Cuando se encuentra un error de donde el sistema no puede
@@ -31,7 +32,7 @@ parser code {:
         de error y se finaliza la ejecucion. */
     public void report_fatal_error(String message, Object info) {
         report_error(message, info);
-        System.exit(1);
+        
     }
 
     /* Metodo main para garantizar la ejecucion del analizador
@@ -40,8 +41,10 @@ parser code {:
     public static void main(String[] args){
         try {
             AnalizadorSintactico asin = new AnalizadorSintactico(
-                    new AnalizadorLexico( new FileReader(args[0])));
-            Object result = asin.parse().value;
+                    new AnalizadorLexico( new StringReader(args[0])));
+            //Object result = asin.parse().value;
+			asin.parse();
+			//Interface_Main.jTextArea2.append(result.toString() + "\n");
             System.out.println("\n*** Resultados finales ***");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -135,18 +138,21 @@ estr			::= CLASE PALABRA BRKT_LFT expr_list BRKT_RGT
 expr_part               ::= comp:e
                             {:
                                 System.out.println(" = " + e);
-								resultado = resultado + e;								
+								//Interface_Main.jTextArea2.append(e.toString() + "\n");
+								//inter.resultado = inter.resultado + e;							
                             :} 
                             SEMI
 							|
 							comparacion:e
                             {:
-                               System.out.println(" = " + e);
+                               System.out.println(" RESULTADOIF " + e);
+							   Interface_Main.jTextArea2.append(e.toString() + "\n");
                             :}
 							|
 							IMPRIMIR comp:e
 							{:
 								System.out.println(" = " + e);
+								Interface_Main.jTextArea2.append(e.toString() + "\n");
 							:}
 							SEMI
 							|
@@ -155,9 +161,15 @@ expr_part               ::= comp:e
 								//System.out.println(" = " + e);
 							:}
 							|
-							INT PALABRA ASIGNACION comp:e
+							INT PALABRA:p ASIGNACION comp:e
 							{:
 								System.out.println(" resultadoFuncion " + e);
+								Interface_Main.test.setM1(p, e);
+								//HashMap variable = new HashMap();
+								//variable.put(p.toString(), e.toString());
+								//Interface_Main.test.setM1(variable);
+								
+								
 								
 							:}
 							SEMI
@@ -165,6 +177,7 @@ expr_part               ::= comp:e
 							funcion:e
 							{:
 								System.out.println(" = " + e);
+								//Interface_Main.jTextArea2.append(e.toString() + "\n");
 							:}
                             ;					
 	
@@ -181,13 +194,14 @@ comparacion             ::= IF PRT_LFT expr:e PRT_RGT BRKT_LFT expr_list:f BRKT_
 constructor             ::= MAIN PALABRA BRKT_LFT expr_list:f BRKT_RGT
                             {:
                                 RESULT = f;
+								Interface_Main.jTextArea2.append(Interface_Main.test.getM1(f) + "\n");
                             :}
 							;
 							
-funcion             ::= FUNCION PALABRA PRT_LFT parametro:e PRT_RGT BRKT_LFT expr_list:f RETORNA PALABRA SEMI BRKT_RGT
+funcion             ::= FUNCION PALABRA PRT_LFT parametro:e PRT_RGT BRKT_LFT expr_list:f RETORNA PALABRA:p SEMI BRKT_RGT
                             {:
-                                RESULT = "funcion";
-								//r = f;
+                                //System.out.println(" = " + e);
+                                Interface_Main.jTextArea2.append(Interface_Main.test.getM1(p) + "\n");
                             :}
 							;
 							
