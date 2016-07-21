@@ -1,11 +1,11 @@
-clase Prueba {
-
-def test(int param1, int param){
-
-	int test = suma(4,3);
-	int hola = suma(9,9);
-	
-	retorna->hola;
-}
-
+clase Prueba {
+
+def test(int param1, int param){
+
+	int test = suma(4,3);
+	int hola = potencia(9,9,9,9);
+	
+	retorna->hola;
+}
+
 }

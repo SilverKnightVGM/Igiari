@@ -281,6 +281,7 @@ public class Interface_Main extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        jTextArea2.setLineWrap(true);
         jTextArea2.setText("");
         String[] archivoPrueba = {jTextArea1.getText()};
                     AnalizadorSintactico.main(archivoPrueba);
