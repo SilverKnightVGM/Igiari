@@ -5,6 +5,7 @@ package ejemplocup;
 import java_cup.runtime.*;
 import java.io.FileReader;
 import java.math.BigDecimal;
+import Interface_Main;
    
 /* Codigo del parser, se copia integramente a la clase final.
     Agregamos el manejo de errores. */
@@ -133,7 +134,8 @@ estr			::= CLASE PALABRA BRKT_LFT expr_list BRKT_RGT
 
 expr_part               ::= comp:e
                             {:
-                                System.out.println(" = " + e); 
+                                System.out.println(" = " + e);
+								resultado = resultado + e;								
                             :} 
                             SEMI
 							|
@@ -156,6 +158,7 @@ expr_part               ::= comp:e
 							INT PALABRA ASIGNACION comp:e
 							{:
 								System.out.println(" resultadoFuncion " + e);
+								
 							:}
 							SEMI
 							|

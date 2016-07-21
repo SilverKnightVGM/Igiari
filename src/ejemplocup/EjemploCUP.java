@@ -21,6 +21,7 @@ public class EjemploCUP {
     public final static int EJECUTAR = 2;
     public final static int SALIR = 3;
     public final static int PRUEBA = 4;
+    
 
     /**
      * Es un menu para elegir entre generar el analizador lexico y sintactico, o

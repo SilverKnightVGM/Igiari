@@ -7,6 +7,7 @@ package ejemplocup;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -18,9 +19,14 @@ public class Interface_Main extends javax.swing.JFrame {
     /**
      * Creates new form Interface_Main
      */
+    
+    public String resultado = "";
+    
+    
     public Interface_Main() {
         initComponents();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,6 +67,11 @@ public class Interface_Main extends javax.swing.JFrame {
         jPanel1.add(jLabel1, gridBagConstraints);
 
         jButton1.setText("Run");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
@@ -169,7 +180,16 @@ public class Interface_Main extends javax.swing.JFrame {
               System.out.println("No File Select");
           }
         
+          
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        jTextArea2.setText(resultado);
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,8 +233,6 @@ public class Interface_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane2;
