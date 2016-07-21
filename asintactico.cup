@@ -56,8 +56,8 @@ parser code {:
 
    Terminales que no tienen un valor son listados primero, los terminales que
    tienen un valor como los enteros son listados en la segunda o demas lineas. */
-terminal           SEMI, MAYOR, MENOR, IGL_MAYOR, IGL_MENOR, DIFF, IGUAL, IF, PRT_LFT, PRT_RGT, INT, SUMA, RESTA, MULTIP, DIVIS, POTENCIA, COMMA, BRKT_LFT, BRKT_RGT, CLASE,IMPRIMIR, MAIN;
-terminal Integer     ENTERO;
+terminal           SEMI, MAYOR, MENOR, IGL_MAYOR, IGL_MENOR, DIFF, IGUAL, IF, PRT_LFT, PRT_RGT, INT, SUMA, RESTA, MULTIP, DIVIS, POTENCIA, COMMA, BRKT_LFT, BRKT_RGT, CLASE,IMPRIMIR, MAIN, ASIGNACION, FUNCION, RETORNA;
+terminal Integer   ENTERO;
 terminal String    PALABRA;
 
 
@@ -67,7 +67,7 @@ terminal String    PALABRA;
    Primero se lista los no terminales que tienen un valor Object y despues
    se lista los no terminales que tienen un entero. Un Object se refiere a que
    no tienen tipo, pudiendo ser entero o String. */
-non terminal Object     expr_list, expr_part, estr, expr, COMPARACION, comp, potter, CONSTRUCTOR; 
+non terminal Object     expr_list, expr_part, estr, expr, comparacion, comp, potter, constructor, parametro, funcion; 
 non terminal Integer	sum, minus, multi, divi;
 
 
@@ -137,7 +137,7 @@ expr_part               ::= comp:e
                             :} 
                             SEMI
 							|
-							COMPARACION:e
+							comparacion:e
                             {:
                                System.out.println(" = " + e);
                             :}
@@ -148,29 +148,84 @@ expr_part               ::= comp:e
 							:}
 							SEMI
 							|
-							CONSTRUCTOR:e
+							constructor:e
+							{:
+								//System.out.println(" = " + e);
+							:}
+							|
+							INT PALABRA ASIGNACION comp:e
+							{:
+								System.out.println(" resultadoFuncion " + e);
+							:}
+							SEMI
+							|
+							funcion:e
 							{:
 								System.out.println(" = " + e);
 							:}
-                            ;
-							
+                            ;					
 	
-COMPARACION             ::= IF PRT_LFT expr:e PRT_RGT BRKT_LFT expr_list:f BRKT_RGT
+comparacion             ::= IF PRT_LFT expr:e PRT_RGT BRKT_LFT expr_list:f BRKT_RGT
                             {:
                                 if ((boolean) e==true){
-								RESULT = f;
+								RESULT = e;
 								}else{
 								RESULT = e;
 								}
                             :}
 							;
 							
-CONSTRUCTOR             ::= MAIN PALABRA BRKT_LFT expr_list:f BRKT_RGT
+constructor             ::= MAIN PALABRA BRKT_LFT expr_list:f BRKT_RGT
                             {:
                                 RESULT = f;
                             :}
 							;
-  
+							
+funcion             ::= FUNCION PALABRA PRT_LFT parametro:e PRT_RGT BRKT_LFT expr_list:f RETORNA PALABRA SEMI BRKT_RGT
+                            {:
+                                RESULT = "funcion";
+								//r = f;
+                            :}
+							;
+							
+							
+parametro			::= 
+							{:	
+							   RESULT = 0;
+							:}
+							|
+						INT PALABRA:e
+							{:	
+								RESULT = e;
+								//System.out.println(" = " + e);
+							:}
+							|
+						INT PALABRA:e COMMA INT PALABRA:f
+							{:	
+								RESULT = f;
+								//System.out.println(" = " + f);
+							:}
+							|
+						INT PALABRA:e COMMA INT PALABRA:f COMMA INT PALABRA:g
+							{:	
+								RESULT = f;
+								//System.out.println(" = " + f);
+							:}
+							|
+						INT PALABRA:e COMMA INT PALABRA:f COMMA INT PALABRA:g COMMA INT PALABRA:h
+							{:	
+								RESULT = f;
+								//System.out.println(" = " + f);
+							:}
+							|
+						INT PALABRA:e COMMA INT PALABRA:f COMMA INT PALABRA:g COMMA INT PALABRA:h COMMA INT PALABRA:i
+							{:	
+								RESULT = f;
+								//System.out.println(" = " + f);
+							:}
+							;
+							
+							
 
   
 comp			::= SUMA PRT_LFT sum:e PRT_RGT
@@ -193,12 +248,12 @@ comp			::= SUMA PRT_LFT sum:e PRT_RGT
 				RESULT = e;
 				:}
 				|
-				INT SUMA PRT_LFT sum:e PRT_RGT
+				POTENCIA PRT_LFT potter:e PRT_RGT
 				{:
 				RESULT = e;
 				:}
 				|
-				POTENCIA PRT_LFT potter:e PRT_RGT
+				ENTERO:e
 				{:
 				RESULT = e;
 				:}
@@ -382,20 +437,20 @@ divi			::=
 					int idk = (e / f);
 					RESULT = idk;
 				:}
-                                |
-                                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
 				{:
 					int idk = (e / f / g);
 					RESULT = idk;
 				:}
-                                |
-                                  ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
 				{:
 					int idk = (e / f / g/ h);
 					RESULT = idk;
 				:}
-                                |
-                                  ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				|
+				 ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
 				{:
 					int idk = (e / f / g / h / i);
 					RESULT = idk;

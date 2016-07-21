@@ -1,11 +1,10 @@
 clase Prueba {
 
-imprimir->suma(4,6);
+def test(int param1, int param){
 
-main prueba{
-
-   imprimir->suma(4,6);
-   
+	int test = suma(4,3);
+	
+	retorna->test;
 }
 
 }

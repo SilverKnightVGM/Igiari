@@ -65,7 +65,7 @@ Espacio     = {Salto} | [ \t\f]
 /* Una literal entera es un numero 0 oSystem.out.println("\n*** Generado " + archNombre + "***\n"); un digito del 1 al 9 
     seguido de 0 o mas digitos del 0 al 9 */
 Entero = [0-9]*\.?[0-9]+
-Palabra =[a-zA-ZÑñ]+
+Palabra =[a-zA-ZÑñ]+[0-9]*
 
 
 %% //fin de opciones
@@ -129,6 +129,12 @@ Palabra =[a-zA-ZÑñ]+
 							return symbol(sym.IMPRIMIR);}
 	"main"				{System.out.print("main" );
 							return symbol(sym.MAIN);}
+	"="					{System.out.print("=" );
+							return symbol(sym.ASIGNACION);}
+	"def"					{System.out.print(" def " );
+							return symbol(sym.FUNCION);}
+    "retorna->"		{System.out.print(" retorna-> ");
+							return symbol(sym.RETORNA);}
 	}
 
 
@@ -140,7 +146,7 @@ Palabra =[a-zA-ZÑñ]+
     {Entero}      {   System.out.print(yytext()); 
                       return symbol(sym.ENTERO, new Integer(yytext())); }
     {Palabra}      {   System.out.print(yytext()); 
-                      return symbol(sym.PALABRA, new String(yytext())); }
+                      return symbol(sym.PALABRA, new String(yytext())); }			  
 
     /* No hace nada si encuentra el espacio en blanco */
     {Espacio}       { /* ignora el espacio */ } 
