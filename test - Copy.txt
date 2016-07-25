@@ -1,0 +1,15 @@
+clase Prueba{
+
+	int test = 52;
+	int h = suma(4,6);
+	
+	def fun(int p1, p2){
+		int t = suma(p1,p2);
+		retorna->t;
+	}
+	
+	main prueba(){	
+	imprimir->h;
+	imprimir->fun(33,34);
+	}
+}

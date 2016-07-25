@@ -1,11 +1,14 @@
-clase Prueba {
-
-def test(int param1, int param){
-
-	int test = suma(4,3);
-	int hola = potencia(9,9,9,9);
-	
-	retorna->hola;
-}
-
+clase Prueba{
+
+	int test = 52;
+	int h = suma(4,6);
+	
+	def fun(int p1, int p2){
+		int t = suma(1,2);
+		int g = potencia(9,99,9,9);
+		retorna->g;
+	}
+
+	imprimir->suma(3,4);
+
 }

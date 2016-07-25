@@ -1,0 +1,409 @@
+estr			::= CLASE PALABRA BRKT_LFT expr_list BRKT_RGT
+				;
+
+
+expr_list ::= expr_list expr_part
+                  |
+                  expr_part
+                  ;
+
+
+expr_part               ::= comp:e
+                            {:
+                                System.out.println(" = " + e);
+								//Interface_Main.jTextArea2.append(e.toString() + "\n");
+								//inter.resultado = inter.resultado + e;							
+                            :} 
+                            SEMI
+							|
+							comparacion:e
+                            {:
+                               System.out.println(" RESULTADOIF " + e);
+							   Interface_Main.jTextArea2.append(e.toString() + "\n");
+                            :}
+							|
+							IMPRIMIR comp:e
+							{:
+								System.out.println(" = " + e);
+								Interface_Main.jTextArea2.append(e.toString() + "\n");
+							:}
+							SEMI
+							|
+							constructor:e
+							{:
+								//System.out.println(" = " + e);
+							:}
+							|
+							INT PALABRA:p ASIGNACION comp:e
+							{:
+								System.out.println(" resultadoFuncion " + e);
+								Interface_Main.test.setM1(p, e);
+								//HashMap variable = new HashMap();
+								//variable.put(p.toString(), e.toString());
+								//Interface_Main.test.setM1(variable);
+								
+								
+								
+							:}
+							SEMI
+							|
+							funcion:e
+							{:
+								System.out.println(" = " + e);
+								//Interface_Main.jTextArea2.append(e.toString() + "\n");
+							:}
+                            ;					
+	
+comparacion             ::= IF PRT_LFT expr:e PRT_RGT BRKT_LFT expr_list:f BRKT_RGT
+                            {:
+                                if ((boolean) e==true){
+								RESULT = e;
+								}else{
+								RESULT = e;
+								}
+                            :}
+							;
+							
+constructor             ::= MAIN PALABRA BRKT_LFT expr_list:f BRKT_RGT
+                            {:
+                                RESULT = f;
+								Interface_Main.jTextArea2.append(Interface_Main.test.getM1(f) + "\n");
+                            :}
+							;
+							
+funcion             ::= FUNCION PALABRA PRT_LFT parametro:e PRT_RGT BRKT_LFT expr_list:f RETORNA PALABRA:p SEMI BRKT_RGT
+                            {:
+                                //System.out.println(" = " + e);
+                                Interface_Main.jTextArea2.append(Interface_Main.test.getM1(p) + "\n");
+                            :}
+							;
+							
+							
+parametro			::= 
+							{:	
+							   RESULT = 0;
+							:}
+							|
+						INT PALABRA:e
+							{:	
+								RESULT = e;
+								//System.out.println(" = " + e);
+							:}
+							|
+						INT PALABRA:e COMMA INT PALABRA:f
+							{:	
+								RESULT = f;
+								//System.out.println(" = " + f);
+							:}
+							|
+						INT PALABRA:e COMMA INT PALABRA:f COMMA INT PALABRA:g
+							{:	
+								RESULT = f;
+								//System.out.println(" = " + f);
+							:}
+							|
+						INT PALABRA:e COMMA INT PALABRA:f COMMA INT PALABRA:g COMMA INT PALABRA:h
+							{:	
+								RESULT = f;
+								//System.out.println(" = " + f);
+							:}
+							|
+						INT PALABRA:e COMMA INT PALABRA:f COMMA INT PALABRA:g COMMA INT PALABRA:h COMMA INT PALABRA:i
+							{:	
+								RESULT = f;
+								//System.out.println(" = " + f);
+							:}
+							;
+							
+							
+
+  
+comp			::= SUMA PRT_LFT sum:e PRT_RGT
+				{:
+				RESULT = e;
+				:}
+				|
+				RESTA PRT_LFT minus:e PRT_RGT
+				{:
+				RESULT = e;
+				:}
+				|
+				MULTIP PRT_LFT multi:e PRT_RGT
+				{:
+				RESULT = e;
+				:}
+				|
+				DIVIS PRT_LFT divi:e PRT_RGT
+				{:
+				RESULT = e;
+				:}
+				|
+				POTENCIA PRT_LFT potter:e PRT_RGT
+				{:
+				RESULT = e;
+				:}
+				|
+				ENTERO:e
+				{:
+				RESULT = e;
+				:}
+				;
+
+  
+  
+  
+
+expr          ::= ENTERO:e MAYOR ENTERO:f
+                {:
+                   if(e > f){
+				    RESULT = true;
+				   }else{
+				   RESULT = false;}
+				   
+                :}
+				|
+				  ENTERO:e MENOR ENTERO:f
+				{:
+					 if(e < f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+				|
+				  ENTERO:e IGL_MAYOR ENTERO:f
+				{:
+					 if(e >= f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+				|
+				  ENTERO:e IGL_MENOR ENTERO:f
+				{:
+					 if(e <= f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+				|
+				  ENTERO:e DIFF ENTERO:f
+				{:
+					 if(e != f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+				|
+				  ENTERO:e IGUAL ENTERO:f
+				{:
+					 if(e == f){
+				    RESULT = true;
+					}else{
+					RESULT = false;
+					}
+				:}
+                ;
+				
+sum			::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f
+				{:
+					RESULT = e.intValue() + f.intValue();
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+				{:
+					int idk = (e + f + g);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+				{:
+					int idk = (e + f + g + h);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				{:
+					int idk = (e + f + g + h + i);
+					RESULT = idk;
+				:}
+				;
+
+minus			::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f
+				{:
+					int idk = (e - f);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+				{:
+					int idk = (e - f - g);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+				{:
+					int idk = (e - f - g - h);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				{:
+					int idk = (e - f - g - h - i);
+					RESULT = idk;
+				:}
+				;
+
+multi			::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+				|				
+				ENTERO:e COMMA ENTERO:f
+				{:
+					int idk = (e * f);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+				{:
+					int idk = (e * f * g);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+				{:
+					int idk = (e * f * g * h);
+					RESULT = idk;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				{:
+					int idk = (e * f * g * h * i);
+					RESULT = idk;
+				:}
+				;
+				
+divi			::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f
+				{:
+					int idk = (e / f);
+					RESULT = idk;
+				:}
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+				{:
+					int idk = (e / f / g);
+					RESULT = idk;
+				:}
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+				{:
+					int idk = (e / f / g/ h);
+					RESULT = idk;
+				:}
+				|
+				 ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				{:
+					int idk = (e / f / g / h / i);
+					RESULT = idk;
+				:}
+				;
+
+potter		::= 
+				{:
+				 RESULT = 0;
+				:}
+				|
+				ENTERO:e 
+				{:
+				RESULT = e;
+				:}
+				|
+				ENTERO:e COMMA ENTERO:f
+				{:
+					BigDecimal bg1, bg2;
+					bg1 = new BigDecimal(e);
+				
+					bg2 = bg1.pow(f);
+
+					RESULT = bg2;
+				:}
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g
+				{:
+					BigDecimal bg1, bg2;
+					bg1 = new BigDecimal(e);
+				
+					bg2 = bg1.pow(f);
+					bg1 = bg2.pow(g);
+
+					RESULT = bg1;
+				:}
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h
+				{:
+				
+					BigDecimal bg1, bg2;
+					bg1 = new BigDecimal(e);
+				
+					bg2 = bg1.pow(f);
+					bg1 = bg2.pow(g);
+					bg2 = bg1.pow(h);
+
+					RESULT = bg2;
+					
+				:}
+                |
+                ENTERO:e COMMA ENTERO:f COMMA ENTERO:g COMMA ENTERO:h COMMA ENTERO:i
+				{:
+					
+					BigDecimal bg1, bg2;
+					bg1 = new BigDecimal(e);
+				
+					bg2 = bg1.pow(f);
+					bg1 = bg2.pow(g);
+					bg2 = bg1.pow(h);
+					bg1 = bg2.pow(i);
+
+					RESULT = bg1;
+				:}
+				;
+

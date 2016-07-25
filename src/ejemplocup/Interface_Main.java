@@ -14,8 +14,10 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.event.UndoableEditEvent;
@@ -35,20 +37,19 @@ public class Interface_Main extends javax.swing.JFrame {
     /**
      * Creates new form Interface_Main
      */
-   public static Mapa test = new Mapa();
-   String path;
-   
- 
+    public static Mapa test = new Mapa();
+    String path;
+
+    // Retrieve the user preference node for the package com.mycompany
+    Preferences prefs = Preferences.userNodeForPackage(ejemplocup.Interface_Main.class);
     
-    public String resultado = "Hola";
+    // Preference key name
+    final String FILE_PATH = "last_path";
     
-    
+
     public Interface_Main() {
         initComponents();
     }
-    
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -229,76 +230,78 @@ public class Interface_Main extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-          //filter the files
-          FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt","igiari","java");
-          JFileChooser file = new JFileChooser();
-          file.setFileFilter(filter);
-          
-          int result;
-          
-          try{
-              file.setCurrentDirectory(new File(path));
-              file.addChoosableFileFilter(filter);
-              result = file.showSaveDialog(null);
-              System.out.println("PATHHHHH" + path);
-          }catch(Exception e){
-              file.setCurrentDirectory(new File(System.getProperty("user.home")+"/Desktop"));
-              file.addChoosableFileFilter(filter);
-              result = file.showSaveDialog(null);
-          }
-          
-          
+        //filter the files
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt", "igiari", "java");
+        JFileChooser file = new JFileChooser();
+        file.setFileFilter(filter);
+
+        int result;
+
+        // Set the value of the preference
+        String pathValue = path;
+
+        try {
+            path = prefs.get(FILE_PATH, pathValue);
+            file.setCurrentDirectory(new File(path));
+            file.addChoosableFileFilter(filter);
+            result = file.showSaveDialog(null);
+            
+        } catch (Exception e) {
+            file.setCurrentDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+            file.addChoosableFileFilter(filter);
+            result = file.showSaveDialog(null);
+        }
+
           //FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "gif", "jpeg");
-          
-           //if the user click on save in Jfilechooser
-          if(result == JFileChooser.APPROVE_OPTION){
-              File selectedFile = file.getSelectedFile();
-              path = selectedFile.getAbsolutePath();
-              jTabbedPane2.setTitleAt(0, path);
+        //if the user click on save in Jfilechooser
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = file.getSelectedFile();
+            path = selectedFile.getAbsolutePath();
+            jTabbedPane2.setTitleAt(0, path);
+            pathValue = path;
+            prefs.put(FILE_PATH, pathValue);
+            
             try {
                 String content = new Scanner(new File(path)).useDelimiter("\\Z").next();
                 jTextArea1.setText(content);
+
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Interface_Main.class.getName()).log(Level.SEVERE, null, ex);
             }
-          }
-          
-           //if the user click on save in Jfilechooser
+        } //if the user click on save in Jfilechooser
+        else if (result == JFileChooser.CANCEL_OPTION) {
+            System.out.println("No File Select");
+        }
 
 
-          else if(result == JFileChooser.CANCEL_OPTION){
-              System.out.println("No File Select");
-          }
-        
-          
     }//GEN-LAST:event_jButton2ActionPerformed
-    public void setTextArea(String text){
-    jTextArea2.append(text);
+    public void setTextArea(String text) {
+        jTextArea2.append(text);
     }
-    
-    
-    
-    
+
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jTextArea2.setLineWrap(true);
         jTextArea2.setText("");
         String[] archivoPrueba = {jTextArea1.getText()};
-                    AnalizadorSintactico.main(archivoPrueba);
-         
-        
-        
+        AnalizadorSintactico.main(archivoPrueba);
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
+
         try (BufferedWriter fileOut = new BufferedWriter(new FileWriter(path))) {
-        jTextArea1.write(fileOut);
-}      catch (IOException ex) {
-           Logger.getLogger(Interface_Main.class.getName()).log(Level.SEVERE, null, ex);
-       }
-        
+            jTextArea1.write(fileOut);
+            JOptionPane.showMessageDialog(rootPane, "Se ha guardado correctamente!", path, JOptionPane.PLAIN_MESSAGE);
+
+        } catch (Exception ex) {
+            Logger.getLogger(Interface_Main.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "No se ha podido guardar", path, 0);
+        }
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
